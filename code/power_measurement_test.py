@@ -1,4 +1,4 @@
-# Generate psd of a pam signal with Proakis formul and check if the power is correct by integrating the psd.
+# Generate psd of a pam signal with Proakis formula and check if the power is correct by integrating the psd.
 import numpy as np
 import matplotlib.pyplot as plt
 

@@ -1,3 +1,4 @@
+# Convert S-parameters to mixed mode and plot.  Also plot impulse response.
 import sys
 import skrf as rf
 from pathlib import Path

@@ -1,3 +1,4 @@
+# Check passitivty of S-parameters using scikit-rf function and also by computing S * dagger(S) and its eigen values
 import sys
 import skrf as rf
 from pathlib import Path
@@ -19,7 +20,7 @@ except Exception as e:
 
 print(f"passivity test returns {snp.is_passive()}")  # Built in passivity test
 
-# The following code computes the eigenvalues of F * dagger(S) at each frequency and checks if it is < 1.
+# The following code computes the eigenvalues of S * dagger(S) at each frequency and checks if it is < 1.
 # The following gives more information, the frequency at which passivity fails
 if 'snp' in locals():
     frequency = snp.f
