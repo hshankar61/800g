@@ -5,6 +5,17 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
+def read_snpfile(file_path):
+    try:
+        snp = rf.Network(file_path)
+        if snp.f[0] != 0:
+            snp = snp.extrapolate_to_dc(kind="linear")
+    except FileNotFoundError:
+        sys.exit(f"Error: File not found at {file_path}")
+    except Exception as e:
+        sys.ext(f"An error occurred: {e}")
+    return snp
+
 
 def plotdata(snp, ax1, ax2, ax3, trace_color, trace_label):
     frequency = snp.f
@@ -30,40 +41,19 @@ axis3 = fig3.add_axes([0.15, 0.1, 0.75, 0.8])
 file_dir = Path(r"data\tracy_3df_01_2211_sparameters\tracy_3df_01_2211_CR_CONV_HOST")
 file_name = Path("TE_224G_CR_TP0_TP5_Conventional_1mDAC_7inHst_100622_THRU.s4p")
 file_path = file_dir / file_name
-try:
-    snp = rf.Network(file_path)
-    if snp.f[0] != 0:
-        snp = snp.extrapolate_to_dc(kind="linear")
-except FileNotFoundError:
-    sys.exit(f"Error: File not found at {file_path}")
-except Exception as e:
-    sys.ext(f"An error occurred: {e}")
+snp = read_snpfile(file_path)
 axis1, axis2 = plotdata(snp, ax1=axis1, ax2=axis2, ax3=axis3, trace_color='b',  trace_label="CR_CONV_HOST")
 
 file_dir = Path(r"data\tracy_3df_01_2211_sparameters\tracy_3df_01_2211_CR_CPC_HOST")
 file_name = Path("TE_224G_CR_TP0_TP5_CPC_1mDAC_071922_THRU.s4p")
 file_path = file_dir / file_name
-try:
-    snp = rf.Network(file_path)
-    if snp.f[0] != 0:
-        snp = snp.extrapolate_to_dc(kind="linear")
-except FileNotFoundError:
-    sys.exit(f"Error: File not found at {file_path}")
-except Exception as e:
-    sys.ext(f"An error occurred: {e}")
+snp = read_snpfile(file_path)
 axis1, axis2 = plotdata(snp, ax1=axis1, ax2=axis2, ax3=axis3, trace_color='g',  trace_label="CR_CPC_HOST")
 
 file_dir = Path(r"data\tracy_3df_01_2211_sparameters\tracy_3df_01_2211_CR_NCC_HOST")
 file_name = Path("TE_224G_CR_TP0_TP5_NCC_1mDAC_100622_THRU.s4p")
 file_path = file_dir / file_name
-try:
-    snp = rf.Network(file_path)
-    if snp.f[0] != 0:
-        snp = snp.extrapolate_to_dc(kind="linear")
-except FileNotFoundError:
-    sys.exit(f"Error: File not found at {file_path}")
-except Exception as e:
-    sys.ext(f"An error occurred: {e}")
+snp = read_snpfile(file_path)
 axis1, axis2 = plotdata(snp, ax1=axis1, ax2=axis2, ax3=axis3, trace_color='r',  trace_label="CR_NCC_HOST")
 
 plt.figure(1)

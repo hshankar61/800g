@@ -1,10 +1,13 @@
 # Create psd of a PAM signal per formula from Proakis
+# Also create a PAM signal in the time domain and measure its psd.
 
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import simpson as simpson
 
 def pam_psdt(num_levels, A, symbol_rate, samples_per_symbol):
+    # Create a PAM signal in time domain and measure its psd.
+    # psd measurements are done from scratch using fft and with scipy.welch to check useage.
     # M-PAM levels are X = A*{-(M-1), ..., -3, ,-1, 1, 3, ... (M-1)}
     # E{X**2} = A**2 * (M**2 - 1)/3 = average symbol energy
     # Assume that the symbol sequence {X_n} are independent
@@ -33,7 +36,8 @@ def pam_psdt(num_levels, A, symbol_rate, samples_per_symbol):
     P_f = Tsymbol * np.sinc(f * Tsymbol)  # Fourier xform of rect(t/T)
     Sp_f = var_levels * (1/Tsymbol) * (np.abs(P_f))**2  # psd
     
-    # This section of code creates a PAM signal in the time domain and measures its psd usig Welch to comapre to Proakis formula.
+    # This section of code creates a PAM signal in the time domain and measures its psd.
+    # psd is calculated in ways - from fft and with Welch.
     # total_power = simpson(Sp_f, x=None, dx=df)  # sum(Sp_f * df)  # this should equal var_levels
     # print(f"Pt = {var_levels}, Pf={total_power:0.2f}")
 
@@ -140,9 +144,12 @@ def pam_psdf(num_levels, power, symbol_rate, fmax=100e9, nf=1024):
     plt.figure()
     plt.plot(f, 10*np.log10(Sp_f))
     plt.grid(True)
+    plt.title("PAM psd from Proakis formula")
+    plt.xlabel("f (Hz)")
+    plt.ylabel("V^2/Hz (dB)")
     ymax = np.ceil(10*np.log10(max(Sp_f)/10)/10) * 10 + 10
     plt.ylim(ymax-60, ymax+10)
-    plt.ylabel("V^2/Hz (dB)")
+    
 
     return f, Sp_f
 

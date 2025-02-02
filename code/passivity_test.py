@@ -18,7 +18,7 @@ except FileNotFoundError:
 except Exception as e:
     sys.ext(f"An error occurred: {e}")
 
-print(f"passivity test returns {snp.is_passive()}")  # Built in passivity test
+print(f"scikit-rf passivity test returns {snp.is_passive()}")  # Built in passivity test
 
 # The following code computes the eigenvalues of S * dagger(S) at each frequency and checks if it is < 1.
 # The following gives more information, the frequency at which passivity fails
@@ -34,5 +34,7 @@ if 'snp' in locals():
 plt.figure()
 plt.plot(frequency, max_singular_value)
 plt.grid(True)
+plt.title("max eigenvalues of S * dagger(S) for each frequency")
+plt.xlabel("f (Hz)")
 plt.show()
 

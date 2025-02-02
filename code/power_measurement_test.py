@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 symbol_rate = 80e9
 Tsymbol = 1.0/symbol_rate
-fmax=800e9
-nf=8000
+fmax=1000e9
+nf=10000
 df = fmax/nf
 A = 1
 M = 8
@@ -19,4 +19,12 @@ print(f"Power from psd = {Pmeasured:0.1f}, Power from formula = {Pformula}")
 plt.figure()
 plt.plot(f, Sp)
 plt.grid(True)
+plt.ylabel("psd (W/Hz)")
+plt.xlabel("f (Hz)")
+plt.title("PAM signal psd from formula")
+plt.text(0.1*max(f), 0.3*max(Sp), "Parseval:")
+plt.text(0.1*max(f), 0.2*max(Sp), f"power from formula = {Pformula:0.2f}")
+plt.text(0.1*max(f), 0.1*max(Sp), f"power from integration = {Pmeasured:0.2f}")
 plt.show()
+
+
